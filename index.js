@@ -1,11 +1,13 @@
 const express = require("express");
 const axios = require("axios");
 const dotenv = require("dotenv");
-
+const morgan = require("morgan");
 // configuring dotenv
 dotenv.config();
 
 const app = express();
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 const port = 3000;
 
