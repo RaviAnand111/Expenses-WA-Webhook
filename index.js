@@ -14,10 +14,12 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
+  console.log('home endpoing');
   res.status(200).send("GET working");
 });
 
 app.post("/webhook", (req, res) => {
+  console.log('webhook');
   const body_param = req.body;
 
   console.log(JSON.stringify(body_param), "body");
