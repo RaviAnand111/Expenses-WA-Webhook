@@ -1,9 +1,9 @@
 const express = require("express");
 const axios = require("axios");
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 
 // configuring dotenv
-dotenv.config()
+dotenv.config();
 
 const app = express();
 
@@ -14,12 +14,26 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  console.log('home endpoing');
+  console.log("home endpoing");
   res.status(200).send("GET working");
 });
 
+app.get("/webhook", (req, res) => {
+  const mode = req.query("hub.mode");
+  const challenge = req.query("hub.challenge");
+  const token = req.query("hub.verify_token");
+
+  if (mode && token) {
+    if (mode === "subscribe" && token === process.env.APP_TOKEN) {
+      res.status(200).send(challenge);
+    } else {
+      res.status(403);
+    }
+  }
+});
+
 app.post("/webhook", (req, res) => {
-  console.log('webhook');
+  console.log("webhook");
   const body_param = req.body;
 
   console.log(JSON.stringify(body_param), "body");
