@@ -13,8 +13,8 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),
 );
 
- app.use(bodyParser.urlencoded({ extended: false }))
- app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const port = 3000;
 
@@ -42,7 +42,7 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-app.post("/webhook", (req, res) => {
+app.post("/webhook", async (req, res) => {
   const body_param = req.body;
 
   console.log(JSON.stringify(body_param), "body");
@@ -56,7 +56,10 @@ app.post("/webhook", (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
-    console.log(`${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`, URL)
+    console.log(
+      `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
+      "url",
+    );
 
     let body = {
       messaging_product: messaging_product,
@@ -77,11 +80,16 @@ app.post("/webhook", (req, res) => {
       "Content-Type": "application/json",
     };
 
-    axios.post(
-      `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
-      body,
-      { headers },
-    );
+    try {
+      const replyResponse = await axios.post(
+        `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
+        body,
+        { headers },
+      );
+      console.log(replyResponse, "reply response");
+    } catch (error) {
+      console.log(error, "Error");
+    }
 
     res.status(200).send("reply sent");
   } else {
