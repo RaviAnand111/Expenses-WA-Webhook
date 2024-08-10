@@ -65,14 +65,14 @@ app.post("/webhook", async (req, res) => {
       messaging_product: messaging_product,
       to: from,
       type: "template",
-      text: {
+      /*text: {
         body: "Hi,this is daily check in expenses",
-      },
-      /*template: {
+      },*/
+      template: {
         name: "hello world",
         language: { code: "en_US" },
       },
-      */
+      
     };
 
     const headers = {
