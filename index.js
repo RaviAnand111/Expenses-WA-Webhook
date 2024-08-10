@@ -7,14 +7,14 @@ const bodyParser = require("body-parser");
 // configuring dotenv
 dotenv.config();
 
- app.use(bodyParser.urlencoded({ extended: false }))
- app.use(bodyParser.json())
-
 const app = express();
 
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms"),
 );
+
+ app.use(bodyParser.urlencoded({ extended: false }))
+ app.use(bodyParser.json())
 
 const port = 3000;
 
