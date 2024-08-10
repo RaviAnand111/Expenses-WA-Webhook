@@ -23,7 +23,7 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  console.log("home endpoing");
+  console.log("home endpoint");
   res.status(200).send("GET working");
 });
 
@@ -56,6 +56,8 @@ app.post("/webhook", (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
+    console.log(`${process.env.META_BASE_URL}/${API_VERSION}/${phoneNumberID}/messages`, URL)
+
     let body = {
       messaging_product: messaging_product,
       to: from,
@@ -76,7 +78,7 @@ app.post("/webhook", (req, res) => {
     };
 
     axios.post(
-      `${process.env.META_BASE_URL}/${API_VERSION}/${phoneNumberID}/messages`,
+      `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
       body,
       { headers },
     );
