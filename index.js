@@ -56,7 +56,7 @@ app.post("/webhook", (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
-    console.log(`${process.env.META_BASE_URL}/${API_VERSION}/${phoneNumberID}/messages`, URL)
+    console.log(`${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`, URL)
 
     let body = {
       messaging_product: messaging_product,
