@@ -2,12 +2,19 @@ const express = require("express");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
+
 // configuring dotenv
 dotenv.config();
 
+const jsonParser = bodyParser.json();
+//const urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 const app = express();
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms"),
+);
 
 const port = 3000;
 
@@ -21,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/webhook", (req, res) => {
-  console.log(req, )
+  console.log(req);
   const mode = req.query["hub.mode"];
   const challenge = req.query["hub.challenge"];
   const token = req.query["hub.verify_token"];
@@ -35,8 +42,7 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-app.post("/webhook", (req, res) => {
-  console.log("webhook");
+app.post("/webhook", jsonParser, (req, res) => {
   const body_param = req.body;
 
   console.log(JSON.stringify(body_param), "body");
