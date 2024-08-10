@@ -7,8 +7,8 @@ const bodyParser = require("body-parser");
 // configuring dotenv
 dotenv.config();
 
-const jsonParser = bodyParser.json();
-//const urlencodedParser = bodyParser.urlencoded({ extended: false })
+ app.use(bodyParser.urlencoded({ extended: false }))
+ app.use(bodyParser.json())
 
 const app = express();
 
@@ -42,7 +42,7 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-app.post("/webhook", jsonParser, (req, res) => {
+app.post("/webhook", (req, res) => {
   const body_param = req.body;
 
   console.log(JSON.stringify(body_param), "body");
