@@ -69,7 +69,7 @@ app.post("/webhook", async (req, res) => {
         body: "Hi,this is daily check in expenses",
       },*/
       template: {
-        name: "hello world",
+        name: "hello_world",
         language: { code: "en_US" },
       },
       
