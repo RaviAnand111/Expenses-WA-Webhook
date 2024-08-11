@@ -1,8 +1,8 @@
-const express = require("express");
-const axios = require("axios");
-const dotenv = require("dotenv");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
+import express from "express";
+import { webhookRouter } from "./routes/webhookRouter.js";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import bodyParser from "body-parser";
 
 // configuring dotenv
 dotenv.config();
@@ -22,6 +22,8 @@ app.listen(port, () => {
   console.log("listening on port");
 });
 
+app.use("/", webhookRouter);
+/*
 app.get("/", (req, res) => {
   console.log("home endpoint");
   res.status(200).send("GET working");
@@ -56,11 +58,6 @@ app.post("/webhook", async (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
-    console.log(
-      `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
-      "url",
-    );
-
     let body = {
       messaging_product: messaging_product,
       to: from,
@@ -69,12 +66,6 @@ app.post("/webhook", async (req, res) => {
         body: "Hi,this is daily check in expenses",
       },
 
-      /*type: "template",
-      template: {
-        name: "hello_world",
-        language: { code: "en_US" },
-      },*/
-      
     };
 
     const headers = {
@@ -97,4 +88,12 @@ app.post("/webhook", async (req, res) => {
   } else {
     res.status(404).send("No response");
   }
+
 });
+*/
+
+/*type: "template",
+template: {
+  name: "hello_world",
+  language: { code: "en_US" },
+},*/
