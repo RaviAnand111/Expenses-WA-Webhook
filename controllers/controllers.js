@@ -7,6 +7,20 @@ import { fileURLToPath } from "url";
 
 XLSX.set_fs(fs);
 
+const EXPENSEJSON = {
+  Date: new Date().toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }),
+  Food: 0,
+  Commute: 0,
+  Household: 0,
+  Loan: 0,
+  description: "description",
+};
+
 const validateWebhook = async (req, res) => {
   const mode = req.query["hub.mode"];
   const challenge = req.query["hub.challenge"];
@@ -38,6 +52,9 @@ const webhookTrigger = async (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
+    const commands = textBody.split(' ');
+    console.log('commands', commands)
+
     let body = {
       messaging_product: messaging_product,
       to: from,
@@ -59,12 +76,13 @@ const webhookTrigger = async (req, res) => {
     };
 
     try {
-      const replyResponse = await axios.post(
+      /*const replyResponse = await axios.post(
         `${process.env.META_BASE_URL}/${process.env.API_VERSION}/${phoneNumberID}/messages`,
         body,
         { headers },
       );
       console.log(replyResponse, "reply response");
+      */
     } catch (error) {
       console.log(error, "Error");
     }
