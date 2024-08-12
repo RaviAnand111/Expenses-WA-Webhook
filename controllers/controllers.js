@@ -52,8 +52,11 @@ const webhookTrigger = async (req, res) => {
     const from = messages[0]?.from;
     const textBody = messages[0]?.text?.body;
 
-    const commands = textBody.split(' ');
-    console.log('commands', commands)
+    const messageAr = textBody.split(' ');
+    const command = messageAr?.[0].toLowerCase();
+    if(command === "add"){
+               
+    }
 
     let body = {
       messaging_product: messaging_product,
